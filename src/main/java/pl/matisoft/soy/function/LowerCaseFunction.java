@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableSet;
 import com.google.inject.Singleton;
 import com.google.template.soy.data.SoyValue;
 import com.google.template.soy.data.restricted.StringData;
+import com.google.template.soy.jssrc.restricted.JsExpr;
+import com.google.template.soy.jssrc.restricted.SoyJsSrcFunction;
 import com.google.template.soy.shared.restricted.SoyJavaFunction;
 import com.google.template.soy.shared.restricted.SoyPureFunction;
 
@@ -13,7 +15,7 @@ import java.util.Set;
 
 @Singleton
 @SoyPureFunction
-public class LowerCaseFunction implements SoyJavaFunction {
+public class LowerCaseFunction implements SoyJavaFunction, SoyJsSrcFunction {
 
     @Inject
     public LowerCaseFunction() {}
@@ -34,6 +36,13 @@ public class LowerCaseFunction implements SoyJavaFunction {
     @Override
     public String getName() {
         return "lowerCase";
+    }
+
+    @Override
+    public JsExpr computeForJsSrc(final List<JsExpr> args) {
+        final JsExpr arg = args.get(0);
+
+        return new JsExpr(String.format("%s.toLowerCase()", arg.getText()), Integer.MAX_VALUE);
     }
 
     @Override

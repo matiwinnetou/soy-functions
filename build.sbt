@@ -13,6 +13,8 @@ crossPaths := false
 // This forbids including Scala related libraries into the dependency
 autoScalaLibrary := false
 
+testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
+
 libraryDependencies += "com.google.template" % "soy" % "2015-04-03" % "provided"
 
 libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
